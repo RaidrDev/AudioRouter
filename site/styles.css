@@ -419,6 +419,41 @@ section { position: relative; z-index: 2; }
   line-height: 1.6;
 }
 
+/* ---------- real screenshot ---------- */
+
+.real-shot { padding: 0 0 40px; }
+
+.real-shot-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+.real-shot-inner img {
+  width: 100%;
+  max-width: 602px;
+  border-radius: 14px;
+  border: 1px solid var(--panel-border);
+  box-shadow: 0 30px 70px -25px rgba(0, 0, 0, 0.65);
+}
+
+.real-shot-caption {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--mono);
+  font-size: 11.5px;
+  letter-spacing: 0.02em;
+  color: var(--text-2);
+}
+
+.real-shot-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--meter-green);
+  box-shadow: 0 0 8px var(--meter-green);
+}
+
 /* ---------- patch bay diagram ---------- */
 
 .patchbay { padding: 120px 0; }

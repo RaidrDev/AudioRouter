@@ -53,7 +53,15 @@ struct MenuContentView: View {
             footer
         }
         .frame(width: 460)
+        #if SCREENSHOT_MODE
+        // Build with `OTHER_SWIFT_FLAGS='-DSCREENSHOT_MODE'` for a solid background
+        // instead of real vibrancy — screenshot tools don't composite the live blur
+        // reliably, so this swaps in a flat approximation just for taking clean
+        // marketing screenshots. Never used for real Debug/Release builds.
+        .background(Color(red: 0.075, green: 0.075, blue: 0.09))
+        #else
         .background(VisualEffectView())
+        #endif
         .onAppear {
             processStore.refresh()
             systemAudio.refresh()

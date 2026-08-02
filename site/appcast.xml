@@ -6,6 +6,19 @@
     <description>Actualizaciones de AudioRouter</description>
     <language>es</language>
     <item>
+      <title>Versión 0.2.0</title>
+      <sparkle:version>3</sparkle:version>
+      <sparkle:shortVersionString>0.2.0</sparkle:shortVersionString>
+      <sparkle:minimumSystemVersion>14.4</sparkle:minimumSystemVersion>
+      <pubDate>Sun, 02 Aug 2026 11:37:11 -0000</pubDate>
+      <enclosure
+          url="https://audiorouter-app.vercel.app/AudioRouter-0.2.0.dmg"
+          sparkle:edSignature="qPnJzHHqwN0++WcpCtbkagIANSFsZeSToiLAUBKMWAsFanDq2wJRM7FVyM8eTivbjz0ecS34hdFRtdYKOkPEAg=="
+          length="2558732"
+          type="application/octet-stream" />
+    </item>
+
+    <item>
       <title>Versión 0.1.1</title>
       <sparkle:version>2</sparkle:version>
       <sparkle:shortVersionString>0.1.1</sparkle:shortVersionString>

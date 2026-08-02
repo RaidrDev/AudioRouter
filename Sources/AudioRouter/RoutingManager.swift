@@ -8,6 +8,7 @@ final class RoutingManager: ObservableObject {
     @Published var lastError: String?
 
     private var routers: [String: ProcessRouter] = [:]
+    private var preMuteGains: [String: Float] = [:]
     private var levelTimer: Timer?
     private let defaults = UserDefaults.standard
     private let assignmentsKey = "dev.raidr.audiorouter.assignments"
@@ -62,6 +63,16 @@ final class RoutingManager: ObservableObject {
     func setGain(_ value: Float, for id: String) {
         gains[id] = value
         routers[id]?.gain = value
+    }
+
+    func toggleMute(for id: String) {
+        let current = gains[id] ?? 1.0
+        if current > 0 {
+            preMuteGains[id] = current
+            setGain(0, for: id)
+        } else {
+            setGain(preMuteGains[id] ?? 1.0, for: id)
+        }
     }
 
     func stopRouting(id: String) {

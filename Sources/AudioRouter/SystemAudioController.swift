@@ -3,15 +3,17 @@ import OSLog
 
 private let systemAudioLog = Logger(subsystem: "dev.raidr.audiorouter", category: "SystemAudio")
 
-/// Controls the system-wide output device plus the two volumes it exposes here:
-/// output and alert/"sound effects" volume. The alert volume in particular isn't a
-/// Core Audio device property — it's only reachable through the same Apple Events
-/// "volume settings" command AppleScript and Shortcuts have used for decades, so
-/// that's what this uses for both.
+/// Controls every connected output device's volume/mute directly via Core Audio
+/// (so each one is independently adjustable, not just whichever is currently
+/// active), plus the system default device and the alert/"sound effects" volume.
+/// The alert volume isn't a Core Audio device property — it's only reachable
+/// through the same Apple Events "volume settings" command AppleScript and
+/// Shortcuts have used for decades, so that's the one thing here that still uses it.
 @MainActor
 final class SystemAudioController: ObservableObject {
-    @Published private(set) var outputDevice: OutputDevice?
-    @Published var outputVolume: Float = 0.5
+    @Published private(set) var defaultDeviceUID: String?
+    @Published private(set) var deviceVolumes: [String: Float] = [:]
+    @Published private(set) var deviceMutes: [String: Bool] = [:]
     @Published var alertVolume: Float = 0.5
 
     private var refreshTimer: Timer?
@@ -24,25 +26,36 @@ final class SystemAudioController: ObservableObject {
     }
 
     func refresh() {
-        outputDevice = OutputDevice.systemDefault()
-        if let settings = Self.readVolumeSettings() {
-            outputVolume = settings.output
-            alertVolume = settings.alert
+        defaultDeviceUID = OutputDevice.systemDefault()?.uid
+        for device in OutputDevice.listAll() {
+            if let volume = device.objectID.readOutputVolume() {
+                deviceVolumes[device.uid] = volume
+            }
+            deviceMutes[device.uid] = device.objectID.readOutputMuted()
+        }
+        if let alert = Self.readAlertVolume() {
+            alertVolume = alert
         }
     }
 
-    func setOutputDevice(_ device: OutputDevice) {
+    func setDefaultDevice(_ device: OutputDevice) {
         do {
             try SystemAudioObject.setDefaultOutputDevice(device.objectID)
-            outputDevice = device
+            defaultDeviceUID = device.uid
         } catch {
             systemAudioLog.error("failed to set default output device: \(error, privacy: .public)")
         }
     }
 
-    func setOutputVolume(_ value: Float) {
-        outputVolume = value
-        Self.run("set volume output volume \(Int(value * 100))")
+    func setVolume(_ value: Float, for device: OutputDevice) {
+        deviceVolumes[device.uid] = value
+        device.objectID.setOutputVolume(value)
+    }
+
+    func toggleMute(for device: OutputDevice) {
+        let newValue = !(deviceMutes[device.uid] ?? false)
+        deviceMutes[device.uid] = newValue
+        device.objectID.setOutputMuted(newValue)
     }
 
     func setAlertVolume(_ value: Float) {
@@ -50,22 +63,15 @@ final class SystemAudioController: ObservableObject {
         Self.run("set volume alert volume \(Int(value * 100))")
     }
 
-    private static func readVolumeSettings() -> (output: Float, alert: Float)? {
-        let source = """
-        set s to get volume settings
-        return {output volume of s, alert volume of s}
-        """
-        guard let script = NSAppleScript(source: source) else { return nil }
+    private static func readAlertVolume() -> Float? {
+        guard let script = NSAppleScript(source: "get alert volume of (get volume settings)") else { return nil }
         var error: NSDictionary?
         let result = script.executeAndReturnError(&error)
         if let error {
-            systemAudioLog.error("read volume settings failed: \(error, privacy: .public)")
+            systemAudioLog.error("read alert volume failed: \(error, privacy: .public)")
             return nil
         }
-        guard result.numberOfItems == 2 else { return nil }
-        let output = result.atIndex(1)?.int32Value ?? 50
-        let alert = result.atIndex(2)?.int32Value ?? 50
-        return (Float(output) / 100, Float(alert) / 100)
+        return Float(result.int32Value) / 100
     }
 
     private static func run(_ command: String) {

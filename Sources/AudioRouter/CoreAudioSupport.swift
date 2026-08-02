@@ -94,6 +94,49 @@ extension AudioObjectID {
         guard status == noErr else { throw CoreAudioError.osStatus(context, status) }
     }
 
+    /// Reads this device's output volume (0...1). Not every device exposes a volume
+    /// on the main element — many interfaces only expose per-channel volume, so this
+    /// falls back to channel 1 (left) if the main element isn't settable.
+    func readOutputVolume() -> Float? {
+        if let v: Float = try? read(kAudioDevicePropertyVolumeScalar, scope: kAudioDevicePropertyScopeOutput, element: kAudioObjectPropertyElementMain, as: 0, context: "readOutputVolume") {
+            return v
+        }
+        return try? read(kAudioDevicePropertyVolumeScalar, scope: kAudioDevicePropertyScopeOutput, element: 1, as: 0, context: "readOutputVolume(ch1)")
+    }
+
+    /// Sets this device's output volume (0...1), writing every channel that exposes
+    /// the property so devices without a main-element volume still respond.
+    func setOutputVolume(_ value: Float) {
+        let clamped = Swift.max(0, Swift.min(1, value))
+        var wroteAny = false
+        if (try? write(kAudioDevicePropertyVolumeScalar, scope: kAudioDevicePropertyScopeOutput, element: kAudioObjectPropertyElementMain, value: clamped, context: "setOutputVolume")) != nil {
+            wroteAny = true
+        }
+        for channel: AudioObjectPropertyElement in [1, 2] {
+            if (try? write(kAudioDevicePropertyVolumeScalar, scope: kAudioDevicePropertyScopeOutput, element: channel, value: clamped, context: "setOutputVolume(ch\(channel))")) != nil {
+                wroteAny = true
+            }
+        }
+        _ = wroteAny
+    }
+
+    func readOutputMuted() -> Bool {
+        (try? read(kAudioDevicePropertyMute, scope: kAudioDevicePropertyScopeOutput, element: kAudioObjectPropertyElementMain, as: UInt32(0), context: "readOutputMuted")) == 1
+    }
+
+    func setOutputMuted(_ muted: Bool) {
+        try? write(kAudioDevicePropertyMute, scope: kAudioDevicePropertyScopeOutput, element: kAudioObjectPropertyElementMain, value: UInt32(muted ? 1 : 0), context: "setOutputMuted")
+    }
+
+    /// Whether this device has a settable volume at all (used to decide whether to
+    /// show a slider for it — some outputs, like certain HDMI displays, don't).
+    func hasSettableOutputVolume() -> Bool {
+        var address = AudioObjectPropertyAddress(mSelector: kAudioDevicePropertyVolumeScalar, mScope: kAudioDevicePropertyScopeOutput, mElement: kAudioObjectPropertyElementMain)
+        if AudioObjectHasProperty(self, &address) { return true }
+        address.mElement = 1
+        return AudioObjectHasProperty(self, &address)
+    }
+
     /// Number of output channels this device exposes (0 for input-only devices).
     func outputChannelCount() -> Int {
         var address = AudioObjectPropertyAddress(

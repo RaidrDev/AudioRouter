@@ -386,3 +386,20 @@ private struct LevelMeterView: View {
         }
     }
 }
+
+#Preview {
+    let processStore = AudioProcessStore()
+    let routing = RoutingManager()
+    let systemAudio = SystemAudioController()
+    let updater = UpdaterController()
+
+    return MenuContentView()
+        .environmentObject(processStore)
+        .environmentObject(routing)
+        .environmentObject(systemAudio)
+        .environmentObject(updater)
+        .onAppear {
+            processStore.start()
+            systemAudio.start()
+        }
+}

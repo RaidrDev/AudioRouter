@@ -4,8 +4,6 @@ A macOS menu bar app that routes each application's audio to a different
 output device — Chrome to your speakers, Spotify to your headphones, at the
 same time. Free, open source, and doesn't send anything home.
 
-![AudioRouter menu bar panel](docs/screenshot.png)
-
 **[Download the latest release →](https://audiorouter-app.vercel.app)** (also available [en español](https://audiorouter-app.vercel.app/es/))
 
 ## Why

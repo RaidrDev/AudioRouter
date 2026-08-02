@@ -1,0 +1,10 @@
+{
+  "headers": [
+    {
+      "source": "/appcast.xml",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-cache, must-revalidate" }
+      ]
+    }
+  ]
+}

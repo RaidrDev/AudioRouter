@@ -1,0 +1,28 @@
+{
+  "sourceLanguage" : "en",
+  "strings" : {
+    "NSAppleEventsUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AudioRouter necesita enviar Apple Events para controlar el volumen de salida, entrada y efectos de sonido del sistema."
+          }
+        }
+      }
+    },
+    "NSAudioCaptureUsageDescription" : {
+      "extractionState" : "manual",
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "AudioRouter necesita capturar el audio de otras apps para poder redirigirlo al dispositivo de salida que elijas."
+          }
+        }
+      }
+    }
+  },
+  "version" : "1.0"
+}

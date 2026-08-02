@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>AudioRouter — cada app, su propia salida de audio</title>
+<meta name="description" content="AudioRouter vive en tu barra de menú y te deja mandar el audio de cada app a un dispositivo distinto: Chrome a los altavoces, Spotify a los auriculares. Gratis, firmado y notarizado por Apple." />
+<meta property="og:title" content="AudioRouter — cada app, su propia salida de audio" />
+<meta property="og:description" content="Enruta el audio de cada aplicación a un dispositivo de salida distinto, desde la barra de menú de macOS." />
+<meta property="og:image" content="/assets/icon-1024.png" />
+<meta property="og:type" content="website" />
+<link rel="icon" href="/assets/favicon-64.png" />
+<link rel="apple-touch-icon" href="/assets/icon-256.png" />
+<link rel="alternate" hreflang="en" href="https://audiorouter-app.vercel.app/" />
+<link rel="alternate" hreflang="es" href="https://audiorouter-app.vercel.app/es/" />
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top">
+      <img src="/assets/icon-256.png" alt="" />
+      AUDIOROUTER
+    </a>
+    <div class="nav-links">
+      <div class="links-inline">
+        <a href="#como-funciona">Cómo funciona</a>
+        <a href="#caracteristicas">Características</a>
+        <a href="#seguridad">Seguridad</a>
+      </div>
+      <a class="lang-switch" href="/">EN</a>
+      <a class="btn btn-ghost" id="nav-download" href="#descarga">Descargar</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <div class="eyebrow"><span class="dot"></span> v<span id="hero-version">0.1.0</span> · macOS 14.4+ · gratis</div>
+      <h1>Cada app,<br />su propia <span class="grad">salida.</span></h1>
+      <p class="lede">
+        AudioRouter vive en tu barra de menú y te deja enrutar el sonido de cada
+        aplicación a un dispositivo distinto — Chrome a los altavoces, Spotify a los
+        auriculares — sin dejar de escuchar el resto por donde toca.
+      </p>
+      <div class="hero-ctas">
+        <a class="btn btn-primary" href="#descarga" id="hero-download">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="m6 11 6 6 6-6"/><path d="M5 21h14"/></svg>
+          Descargar para Mac
+        </a>
+        <a class="btn btn-ghost" href="#como-funciona">Ver cómo funciona</a>
+      </div>
+      <div class="hero-meta">Apple Silicon &amp; Intel · <b>Firmado con Developer ID</b> · notarizado por Apple</div>
+    </div>
+
+    <div>
+      <div style="position:relative;">
+        <div class="panel-glow"></div>
+        <div class="panel-mock">
+          <div class="panel-head">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a5 5 0 0 0-5 5v3.17A3 3 0 0 0 5 14v3a3 3 0 0 0 3 3h.17a3.001 3.001 0 0 0 5.66 0H14a3 3 0 0 0 3-3v-3a3 3 0 0 0-2-2.83V8a5 5 0 0 0-5-5Zm-3 8V8a3 3 0 1 1 6 0v3Z"/></svg>
+            AudioRouter
+          </div>
+
+          <div class="panel-section-label">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="m6 9 6 6 6-6"/></svg>
+            Sistema
+          </div>
+          <div class="mock-row">
+            <div class="mock-icon" style="background: linear-gradient(135deg, var(--blue), var(--cyan));">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 10v4h4l5 5V5L7 10H3Zm13.5 2a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12Z"/></svg>
+            </div>
+            <div class="mock-pill" style="margin-left:auto;">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M4 7h16v2H4zm0 4h10v2H4zm0 4h13v2H4z" opacity="0"/><path d="M12 5v14M8 9l4-4 4 4M8 15l4 4 4-4" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Auriculares externos
+            </div>
+          </div>
+          <div class="mock-slider" style="margin-left:6px;"></div>
+
+          <div style="height:12px;"></div>
+
+          <div class="mock-row">
+            <div class="mock-icon" style="background:#f0523d;">
+              <svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="9"/></svg>
+            </div>
+            <div class="mock-name">Brave</div>
+            <div class="mock-meter"></div>
+            <div class="mock-pill">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 10v4h4l5 5V5L7 10H3Z"/></svg>
+              Predeterminado
+            </div>
+          </div>
+          <div class="mock-slider"></div>
+
+          <div class="mock-row">
+            <div class="mock-icon" style="background:#1ed760;">
+              <svg viewBox="0 0 24 24" fill="#0b0b0e"><path d="M12 2a10 10 0 1 0 0 20 10 10 0 0 0 0-20Zm4.3 14.4a.6.6 0 0 1-.83.2c-2.3-1.4-5.2-1.7-8.6-.93a.6.6 0 1 1-.27-1.17c3.7-.85 6.9-.48 9.5 1.08a.6.6 0 0 1 .2.82Zm1.2-2.7a.75.75 0 0 1-1.03.25c-2.6-1.6-6.6-2.06-9.7-1.13a.75.75 0 1 1-.43-1.44c3.5-1.05 7.9-.55 10.9 1.3a.75.75 0 0 1 .26 1.02Zm.1-2.8C14.9 9.1 9.6 8.9 6.5 9.86a.9.9 0 1 1-.53-1.72c3.6-1.1 9.4-.87 13.1 1.35a.9.9 0 1 1-.97 1.51h.03Z"/></svg>
+            </div>
+            <div class="mock-name">Spotify</div>
+            <div class="mock-meter m2"></div>
+            <div class="mock-pill">
+              <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 9l4-4 4 4M8 15l4 4 4-4" stroke="currentColor" stroke-width="0" fill="none"/><path d="M17 8h.01M4 16v3a2 2 0 0 0 2 2h1M4 8V5a2 2 0 0 1 2-2h1m10 0h1a2 2 0 0 1 2 2v3m0 8v3a2 2 0 0 1-2 2h-1" stroke="currentColor" stroke-width="0"/><path d="M2 12c1-3 4-5 6-2 1 1.5 2.5 1.5 3 0 .7-2 1.5-3 2.5-2s1.3 3.3 2.5 2c1-1 3-1 4 1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              Logi Z407
+            </div>
+          </div>
+          <div class="mock-slider"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="patchbay" id="como-funciona">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-tag">// PATCH BAY</div>
+      <h2 class="section-title">Como un cuadro de conexiones, pero por software</h2>
+      <p class="section-desc">Eliges qué app suena por dónde. AudioRouter intercepta el audio de cada
+        proceso y lo reenvía al dispositivo que le asignes, en tiempo real.</p>
+    </div>
+
+    <div class="patch-grid reveal">
+      <div class="patch-col">
+        <div class="patch-node">
+          <div class="ic" style="background:#f0523d;">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M3 10v4h4l5 5V5L7 10H3Zm13.5 2a4.5 4.5 0 0 0-2.5-4.03v8.06A4.5 4.5 0 0 0 16.5 12Z"/></svg>
+          </div>
+          <div><div class="label">Navegador</div><div class="sub">vídeo, pestañas</div></div>
+        </div>
+        <div class="patch-node">
+          <div class="ic" style="background:#1ed760;">
+            <svg viewBox="0 0 24 24" fill="#0b0b0e"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>
+          </div>
+          <div><div class="label">Música</div><div class="sub">reproductor</div></div>
+        </div>
+        <div class="patch-node">
+          <div class="ic" style="background:#5865f2;">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17 10.5V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-3.5l4 4v-11l-4 4Z"/></svg>
+          </div>
+          <div><div class="label">Videollamadas</div><div class="sub">micro + voz</div></div>
+        </div>
+      </div>
+
+      <div class="patch-cables">
+        <svg viewBox="0 0 400 260" preserveAspectRatio="none">
+          <path class="flow" d="M0,40 C120,40 140,130 200,130" stroke="url(#g1)" />
+          <path class="flow" d="M0,130 C120,130 140,130 200,130" stroke="url(#g1)" style="animation-delay:.3s" />
+          <path class="flow" d="M0,220 C120,220 140,130 200,130" stroke="url(#g1)" style="animation-delay:.6s" />
+          <path class="flow" d="M200,130 C260,130 280,50 400,50" stroke="url(#g2)" style="animation-delay:.1s" />
+          <path class="flow" d="M200,130 C260,130 280,130 400,130" stroke="url(#g2)" style="animation-delay:.4s" />
+          <path class="flow" d="M200,130 C260,130 280,210 400,210" stroke="url(#g2)" style="animation-delay:.7s" />
+          <defs>
+            <linearGradient id="g1" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#3b6bf0"/><stop offset="1" stop-color="#7c3fe0"/>
+            </linearGradient>
+            <linearGradient id="g2" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0" stop-color="#7c3fe0"/><stop offset="1" stop-color="#17b6c9"/>
+            </linearGradient>
+          </defs>
+        </svg>
+        <div class="appicon-router">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l3-9 4 18 3-9h4"/></svg>
+        </div>
+      </div>
+
+      <div class="patch-col right">
+        <div class="patch-node">
+          <div class="ic" style="background:linear-gradient(135deg, var(--blue), var(--cyan));">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 9l4-4 4 4M8 15l4 4 4-4" stroke="currentColor" stroke-width="0" fill="none"/><path d="M2 12c1-3 4-5 6-2 1 1.5 2.5 1.5 3 0 .7-2 1.5-3 2.5-2s1.3 3.3 2.5 2c1-1 3-1 4 1" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div><div class="label">Auriculares Bluetooth</div><div class="sub">salida A</div></div>
+        </div>
+        <div class="patch-node">
+          <div class="ic" style="background:linear-gradient(135deg, var(--violet), var(--blue));">
+            <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18Zm0 3a1 1 0 1 1 0 2 1 1 0 0 1 0-2Zm0 4a4 4 0 0 1 0 8 1 1 0 1 1 0-2 2 2 0 1 0 0-4 1 1 0 1 1 0-2Z"/></svg>
+          </div>
+          <div><div class="label">Altavoces del Mac</div><div class="sub">salida B</div></div>
+        </div>
+        <div class="patch-node">
+          <div class="ic" style="background:linear-gradient(135deg, var(--cyan), var(--meter-green));">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M8 20h8M12 16v4"/></svg>
+          </div>
+          <div><div class="label">Monitor HDMI</div><div class="sub">salida C</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="features" id="caracteristicas">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="section-tag">// CARACTERÍSTICAS</div>
+      <h2 class="section-title">Todo el control, cero fricción</h2>
+    </div>
+
+    <div class="feature-grid reveal">
+      <div class="feature">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg></div>
+        <h3>Volumen independiente por app</h3>
+        <p>Cada aplicación tiene su propio slider y su propio medidor de nivel en vivo — sube Spotify sin tocar el resto.</p>
+      </div>
+      <div class="feature">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10v4h4l5 5V5L7 10H3Z"/><path d="M17 8a5 5 0 0 1 0 8M20 5a9 9 0 0 1 0 14"/></svg></div>
+        <h3>Control del sistema</h3>
+        <p>Salida, efectos de sonido y dispositivo predeterminado, todo desde el mismo menú — sin abrir Ajustes.</p>
+      </div>
+      <div class="feature">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.5 8.7 8 10 4.5-1.3 8-5 8-10V6l-8-4Z"/><path d="m9 12 2 2 4-4"/></svg></div>
+        <h3>Firmada y notarizada</h3>
+        <p>Developer ID de Apple + notarización real. Gatekeeper la acepta sin avisos raros.</p>
+      </div>
+      <div class="feature">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="4"/><path d="M9 9h.01M15 9h.01M9 15c.83.67 1.83 1 3 1s2.17-.33 3-1"/></svg></div>
+        <h3>Vive en la barra de menú</h3>
+        <p>Sin icono en el Dock, sin ventanas de sobra. Un clic y listo.</p>
+      </div>
+      <div class="feature">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 3 14h7l-1 8 10-12h-7l1-8Z"/></svg></div>
+        <h3>Audio nativo de macOS</h3>
+        <p>Usa la API de Process Taps de Apple (macOS 14.4+) — nada de drivers de audio virtuales ni kernel extensions.</p>
+      </div>
+      <div class="feature">
+        <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="m6 11 6 6 6-6"/><path d="M5 21h14"/></svg></div>
+        <h3>Se actualiza sola</h3>
+        <p>Comprueba nuevas versiones en segundo plano y te avisa cuando hay algo nuevo que instalar.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="trust" id="seguridad">
+  <div class="wrap">
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+      Firmada con Developer ID
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+      Notarizada por Apple
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+      Sin telemetría, sin cuentas
+    </div>
+    <div class="trust-item">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+      macOS 14.4 o superior
+    </div>
+  </div>
+</section>
+
+<section class="cta" id="descarga">
+  <div class="wrap">
+    <div class="cta-card reveal">
+      <h2>Ponla a sonar en 30 segundos</h2>
+      <p>Descarga, abre el .dmg, arrastra a Aplicaciones. Eso es todo.</p>
+      <a class="btn btn-primary large" id="main-download" href="#">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v13"/><path d="m6 11 6 6 6-6"/><path d="M5 21h14"/></svg>
+        Descargar AudioRouter <span id="cta-version">v0.1.0</span>
+      </a>
+      <div class="hero-meta" style="margin-top:18px;">.dmg · <span id="cta-size">527 KB</span> · Apple Silicon &amp; Intel</div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-brand">
+      <img src="/assets/icon-256.png" alt="" />
+      AudioRouter — hecha para macOS
+    </div>
+    <div class="foot-links">
+      <a href="/appcast.xml">Registro de versiones</a>
+      <a href="#top">Volver arriba</a>
+    </div>
+  </div>
+</footer>
+
+<script src="/script.js"></script>
+</body>
+</html>

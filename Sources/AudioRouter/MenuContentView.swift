@@ -5,6 +5,7 @@ struct MenuContentView: View {
     @EnvironmentObject var routing: RoutingManager
     @EnvironmentObject var systemAudio: SystemAudioController
     @EnvironmentObject var updater: UpdaterController
+    @EnvironmentObject var launchAtLogin: LaunchAtLoginController
 
     private var devices: [OutputDevice] { OutputDevice.listAll() }
 
@@ -115,9 +116,7 @@ struct MenuContentView: View {
 
     private var footer: some View {
         HStack(spacing: 14) {
-            HoverIconButton(systemName: "gearshape.fill", help: "Privacy Settings") {
-                NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_ScreenCapture")!)
-            }
+            settingsMenu
 
             HoverIconButton(systemName: "arrow.down.circle", help: "Check for Updates…") {
                 updater.checkForUpdates()
@@ -135,6 +134,32 @@ struct MenuContentView: View {
         .font(.system(size: 13))
         .padding(.horizontal, 14)
         .padding(.vertical, 10)
+    }
+
+    private var settingsMenu: some View {
+        Menu {
+            Button {
+                launchAtLogin.toggle()
+            } label: {
+                if launchAtLogin.isEnabled {
+                    Label("Launch at Login", systemImage: "checkmark")
+                } else {
+                    Text("Launch at Login")
+                }
+            }
+
+            Divider()
+
+            Button("Privacy Settings…") {
+                NSWorkspace.shared.open(URL(string: "x-apple.systempreferences:com.apple.preference.security?Privacy_ScreenCapture")!)
+            }
+        } label: {
+            Image(systemName: "gearshape.fill")
+                .frame(width: 26, height: 26)
+        }
+        .menuStyle(.borderlessButton)
+        .menuIndicator(.hidden)
+        .fixedSize()
     }
 }
 
@@ -400,12 +425,14 @@ private struct LevelMeterView: View {
     let routing = RoutingManager()
     let systemAudio = SystemAudioController()
     let updater = UpdaterController()
+    let launchAtLogin = LaunchAtLoginController()
 
     return MenuContentView()
         .environmentObject(processStore)
         .environmentObject(routing)
         .environmentObject(systemAudio)
         .environmentObject(updater)
+        .environmentObject(launchAtLogin)
         .onAppear {
             processStore.start()
             systemAudio.start()

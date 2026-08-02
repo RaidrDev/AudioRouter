@@ -15,6 +15,7 @@ struct AudioRouterApp: App {
     @StateObject private var routing = RoutingManager()
     @StateObject private var systemAudio = SystemAudioController()
     @StateObject private var updater = UpdaterController()
+    @StateObject private var launchAtLogin = LaunchAtLoginController()
 
     var body: some Scene {
         MenuBarExtra("AudioRouter", systemImage: "hifispeaker.fill") {
@@ -23,6 +24,7 @@ struct AudioRouterApp: App {
                 .environmentObject(routing)
                 .environmentObject(systemAudio)
                 .environmentObject(updater)
+                .environmentObject(launchAtLogin)
                 .onAppear {
                     processStore.start()
                     systemAudio.start()

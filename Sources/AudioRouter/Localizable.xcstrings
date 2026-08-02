@@ -42,6 +42,16 @@
         }
       }
     },
+    "Launch at Login" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Iniciar con el sistema"
+          }
+        }
+      }
+    },
     "No app is playing audio right now." : {
       "localizations" : {
         "es" : {
@@ -70,6 +80,16 @@
           "stringUnit" : {
             "state" : "translated",
             "value" : "Ajustes de privacidad"
+          }
+        }
+      }
+    },
+    "Privacy Settings…" : {
+      "localizations" : {
+        "es" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Ajustes de privacidad…"
           }
         }
       }
